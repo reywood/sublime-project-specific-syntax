@@ -1,5 +1,6 @@
 import os.path
 import re
+import sublime
 import sublime_plugin
 
 
@@ -15,7 +16,7 @@ class ProjectSpecificSyntax(sublime_plugin.EventListener):
             self._set_syntax(view, syntax)
 
     def _get_project_specific_syntax(self, view, filename):
-        project_data = view.window().project_data()
+        project_data = self._resolve_window(view).project_data()
 
         if not project_data:
             return None
@@ -34,3 +35,11 @@ class ProjectSpecificSyntax(sublime_plugin.EventListener):
         view.set_syntax_file('{0}.tmLanguage'.format(syntax_path))
 
         print('Switched syntax to: {0}'.format(syntax_path))
+
+    def _resolve_window(self, view):
+        window = view.window()
+
+        if window:
+            return window
+
+        return sublime.active_window()

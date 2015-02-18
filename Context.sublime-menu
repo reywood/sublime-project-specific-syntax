@@ -1,0 +1,15 @@
+[
+    { "caption": "-", "id": "projectspecificsyntax-sep-top"},
+    {
+        "id": "projectspecificsyntax",
+        "caption": "Project Specific Syntax",
+        "children":
+        [
+            {
+                "caption": "Copy syntax setting to clipboard",
+                "command": "project_specific_syntax_to_clipboard"
+            }
+        ]
+    },
+    { "caption": "-", "id": "projectspecificsyntax-sep-bottom"}
+]

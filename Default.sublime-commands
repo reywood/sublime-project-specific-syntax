@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Project Specific Syntax: Copy syntax setting to clipboard",
+        "command": "project_specific_syntax_to_clipboard"
+    },
+]

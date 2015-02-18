@@ -1,0 +1,6 @@
+Project Specific Syntax 0.0.4
+-----------------------------
+
+Generating the key/value pairs to specify your custom syntax settings is now much easier!
+
+Open an existing file in your project, set the syntax you would like to use for that file with the `View > Syntax > ...` menus (or the command palette), right click in the file editor area, and select the `Project Specific Syntax > Copy syntax setting to clipboard` menu item. This menu item is also available via the command palette. Once copied to the clipboard, simply open your project file and paste the new key/value pair into the `syntax_override` section. Be sure to add any necessary commas to separate multiple key/value pairs so your project file is still valid JSON.

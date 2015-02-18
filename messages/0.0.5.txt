@@ -1,0 +1,4 @@
+Project Specific Syntax 0.0.5
+-----------------------------
+
+Bug fix: syntaxes should be loaded properly for users running Windows now

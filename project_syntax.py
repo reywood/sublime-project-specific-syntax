@@ -31,9 +31,9 @@ class ProjectSpecificSyntax(sublime_plugin.EventListener):
         return None
 
     def _set_syntax(self, view, syntax):
-        syntax_path = os.path.join('Packages', *syntax)
+        syntax_path = '/'.join(syntax)
 
-        view.set_syntax_file('{0}.tmLanguage'.format(syntax_path))
+        view.set_syntax_file('Packages/{0}.tmLanguage'.format(syntax_path))
 
         print('Switched syntax to: {0}'.format(syntax_path))
 

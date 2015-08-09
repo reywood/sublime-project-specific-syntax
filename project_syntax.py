@@ -8,6 +8,12 @@ import sublime_plugin
 class ProjectSpecificSyntax(sublime_plugin.EventListener):
 
     def on_load(self, view):
+        self._ensure_project_specific_syntax(view)
+
+    def on_post_save(self, view):
+        self._ensure_project_specific_syntax(view)
+
+    def _ensure_project_specific_syntax(self, view):
         filename = view.file_name()
         if not filename:
             return

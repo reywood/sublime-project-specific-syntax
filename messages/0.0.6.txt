@@ -1,0 +1,4 @@
+Project Specific Syntax 0.0.6
+-----------------------------
+
+Update syntax on save as well as load

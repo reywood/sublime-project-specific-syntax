@@ -1,0 +1,4 @@
+Project Specific Syntax 0.0.7
+-----------------------------
+
+Support new syntax file extension `.sublime-syntax`

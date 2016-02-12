@@ -73,7 +73,7 @@ class ProjectSpecificSyntaxToClipboardCommand(sublime_plugin.TextCommand):
     def _get_syntax_path_parts(self):
         syntax = self.view.settings().get('syntax')
 
-        match = re.search(r'^Packages/(.*)\.tmLanguage$', syntax)
+        match = re.search(r'^Packages/(.*)\.(tmLanguage|sublime-syntax)$', syntax)
 
         if not match:
             print('Syntax does not match expected format: {0}'.format(syntax))

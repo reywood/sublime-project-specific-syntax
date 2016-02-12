@@ -2,5 +2,6 @@
     "install": "README.md",
     "0.0.4": "messages/0.0.4.txt",
     "0.0.5": "messages/0.0.5.txt",
-    "0.0.6": "messages/0.0.6.txt"
+    "0.0.6": "messages/0.0.6.txt",
+    "0.0.7": "messages/0.0.7.txt"
 }

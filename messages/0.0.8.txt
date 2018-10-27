@@ -1,0 +1,14 @@
+Project Specific Syntax 0.0.8
+-----------------------------
+
+Now, when the "copy syntax setting to clipboard" functionality is used, it will include the enclosing "syntax_override" setting block if there isn't one already present in the current project's settings file. So for new projects, instead of just the following being copied to the clipboard:
+
+    "\\.py$": ["Python Improved", "PythonImproved"]
+
+being copied to the clipboard, you'll get this instead:
+
+    "syntax_override": {
+        "\\.py$": ["Python Improved", "PythonImproved"]
+    }
+
+Of course, if there are already "syntax_override" settings present, you'll just get the single line, as before.

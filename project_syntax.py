@@ -23,7 +23,7 @@ class ProjectSpecificSyntax(sublime_plugin.EventListener):
             self._set_syntax(view, syntax)
 
     def _get_project_specific_syntax(self, view, filename):
-        project_data = self._resolve_window(view).project_data()
+        project_data = _resolve_window(view).project_data()
 
         if not project_data:
             return None
@@ -43,32 +43,37 @@ class ProjectSpecificSyntax(sublime_plugin.EventListener):
 
         print('Switched syntax to: {0}'.format(syntax_path))
 
-    def _resolve_window(self, view):
-        window = view.window()
-
-        if window:
-            return window
-
-        return sublime.active_window()
-
 
 class ProjectSpecificSyntaxToClipboardCommand(sublime_plugin.TextCommand):
 
-    def __init__(self, window):
-        super().__init__(window)
+    def __init__(self, view):
+        super().__init__(view)
+        self._view = view
 
     def run(self, edit):
+        suggested_setting = self._build_suggested_setting()
+
+        if not suggested_setting:
+            sublime.set_clipboard('Unable to create syntax setting')
+        else:
+            sublime.set_clipboard(suggested_setting)
+
+    def _build_suggested_setting(self):
+        suggested_setting = self._build_syntax_setting_for_current_file()
+        if not suggested_setting:
+            return None
+
+        return self._enclose_in_syntax_override_block_if_not_present_in_settings(suggested_setting)
+
+    def _build_syntax_setting_for_current_file(self):
         syntax_path_parts = self._get_syntax_path_parts()
 
         if not syntax_path_parts:
-            sublime.set_clipboard("Unable to create syntax setting")
-            return
+            return None
 
         syntax_path_json = json.dumps(syntax_path_parts)
-        file_regex = self._get_example_file_regex()
-        suggested_setting = '"{0}": {1}'.format(file_regex, syntax_path_json)
-
-        sublime.set_clipboard(suggested_setting)
+        file_regex = self._get_example_file_regex_for_current_file()
+        return '"{0}": {1}'.format(file_regex, syntax_path_json)
 
     def _get_syntax_path_parts(self):
         syntax = self.view.settings().get('syntax')
@@ -81,7 +86,17 @@ class ProjectSpecificSyntaxToClipboardCommand(sublime_plugin.TextCommand):
 
         return match.group(1).split('/')
 
-    def _get_example_file_regex(self):
+    def _enclose_in_syntax_override_block_if_not_present_in_settings(self, suggested_setting):
+        if self._is_syntax_override_already_present_in_settings():
+            return suggested_setting
+
+        return '"syntax_override": {{\n\t{0}\n}}'.format(suggested_setting)
+
+    def _is_syntax_override_already_present_in_settings(self):
+        project_data = _resolve_window(self._view).project_data()
+        return 'syntax_override' in project_data
+
+    def _get_example_file_regex_for_current_file(self):
         file_name = self.view.file_name()
 
         if file_name:
@@ -90,3 +105,12 @@ class ProjectSpecificSyntaxToClipboardCommand(sublime_plugin.TextCommand):
             ext = '.xyz'
 
         return '\\\\{0}$'.format(ext)
+
+
+def _resolve_window(view):
+    window = view.window()
+
+    if window:
+        return window
+
+    return sublime.active_window()

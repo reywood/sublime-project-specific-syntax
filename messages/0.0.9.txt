@@ -1,0 +1,4 @@
+Project Specific Syntax 0.0.9
+-----------------------------
+
+Fix support for syntax file extension `.sublime-syntax`
